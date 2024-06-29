@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Preview App</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    // React component to manage the color input and preview
+    const ColorPreviewApp = () => {
+      const [color, setColor] = React.useState("");
+      const [isValid, setIsValid] = React.useState(true);
+
+      // Function to handle input change
+      const handleInputChange = (e) => {
+        const value = e.target.value;
+        // Check if the entered value is a valid hex color code
+        if (/^#[0-9A-F]{6}$/i.test(value)) {
+          setColor(value);
+          setIsValid(true);
+        } else {
+          setIsValid(false);
+        }
+      };
+
+      return (
+        <div>
+          <h1>Color Preview App</h1>
+          <input
+            type="text"
+            value={color} // This was mistakenly spelled as 'vlaue'
+            onChange={handleInputChange}
+            style={{
+              width: "100%",
+              padding: "10px",
+              fontSize: "16px",
+              marginBottom: "10px",
+              border: isValid ? "1px solid #ccc" : "1px solid red",
+            }}
+            placeholder="Enter a HEX color code"
+          />
+          {!isValid && (
+            <p style={{ color: "red", marginBottom: "10px" }}>
+              Please enter a valid HEX color code (e.g., #FFFFFF)
+            </p>
+          )}
+          <div
+            style={{
+              width: "200px",
+              height: "200px",
+              backgroundColor: color,
+              border: "1px solid #ccc",
+              marginTop: "10px",
+            }}
+          ></div>
+        </div>
+      );
+    };
+
+const App =()=>{
+        return(
+            <>
+             <ColorPreviewApp />
+            </>
+        )
+    }
+
+    // Render the ColorPreviewApp component into the root div
+    const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+    rootElement.render(<App />);
+  </script>
+</body>
+</html>
